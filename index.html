@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Scramble Game</title>
+  <link rel="stylesheet" href="new.css">
+</head>
+<body>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:70vh;
+  background-color: #f0f0f0;
+}
+
+.container {
+  text-align: center;
+}
+
+.game {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+}
+
+#scramble-word {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#user-input {
+  margin-bottom: 100px;
+}
+
+.guess {
+  padding: 8px;
+  margin-right: 10px;
+  position:relative;
+  top:50px;
+}
+
+.but{
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #20B2AA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  position:relative;
+  top:50px;
+}
+
+button:hover {
+  background-color: #20B2AA;
+}
+
+.word {
+  font-size: 32px;
+  margin-bottom: 20px;
+  letter-spacing: 8px;
+  color: #3498db;
+  position:relative;
+  top:10px;
+}
+
+#newword{
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+
+.score {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left:5px;
+}
+
+.score span {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.sn {
+  
+  font-weight: bold;
+  color: #007bff; /* Change color to your preference */
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top:10px;
+  left:5px;
+  
+}
+
+.time span {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.tn {
+  
+  font-weight: bold;
+  color: #007bff; 
+}
+
+.wod{
+  position: relative;
+  font-size: 15px;
+  top: 30px;
+  left:-80px;
+}
+.tobe{
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #191970;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  position:relative;
+  top:50px;
+}
+
+
+
+
+.login-form {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.sub {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.clr:hover {
+  background-color: limegreen;
+}
+
+
+.clr1:hover {
+  background-color: rebeccapurple;
+}
+
+
+.clr2:hover {
+  background-color: red;
+}
+#scr{
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+  </style>
+  <div id="log" hidden class="login-form">
+    <h2>Enter Your Name</h2>
+    <div id="loginForm">
+      
+      <input type="text" id="username" require>
+      <button id="mn" class="sub" type="submit">START GAME</button>
+    </div>
+  </div>
+
+  
+  <div class="container" id ="am" hidden>
+     <div class="score">
+    <span>Score:</span>
+    <span id="sn">0</span>
+     </div>
+  
+     <div class="time">
+    <span>Time:</span>
+    <span id="tn">30</span>
+     </div>
+  
+  
+    <h4>Write The Word In Order</h4>
+    <div class="game">
+      <span class="word"></span>
+      <div id="hen" class="wod"></div>
+      <div id="user-input">
+        <input type="text" class="guess" placeholder="Your guess..."></input>
+        <button class = "but">Check</button>
+      </div>
+      <div id="result"></div>
+      <div hidden id="newword"></div>
+    </div>
+    <button class = "tobe">NEXT</button>
+  </div>
+  
+  <div hidden id="scr">hjj </div>
+  <script src="new.js">
+    
+
+let a = -1
+let b = 0
+let c = 39
+log.hidden = false
+let neu = document.querySelector("#newword")
+let gue = document.querySelector(".guess")
+
+
+let tobe = document.querySelector(".tobe")
+let fun = (x) => {
+  a++
+  if(a == 10){
+    am.hidden = true
+    localStorage.setItem(username.value,b)
+    scr.hidden = false
+    scr.textContent = `${username.value}'s score is ${b}`
+    
+  }
+  
+  tobe.hidden = true
+  let tim = setInterval(() => {
+    tn.textContent = c
+    c--
+    if(c==-1){
+      
+    tobe.hidden = false
+    clearInterval(tim)
+    c = 40
+    
+    neu.hidden = false
+    neu.style.backgroundColor = "#6A5ACD"
+    neu.textContent = "TIME FINISHED"
+    
+    
+    }
+
+  }, 1000)
+  let word = ["ALBANIA", "THALLIUM", "WHALE","WATCH","OCEAN","EARTH","AEROPLANE","COBRA","CANDLE","PENCIL","IGLOO"]
+  let hint = ["Country's name", "Chemical element", "Lives in water","It shows time","Contains water","Round","Flies","Bites human","Helps at night","for writing","Made with ice for living"]
+
+  let main = document.querySelector(".word")
+  let m = word[a]
+  hen.textContent = `HINT: ${hint[a]}`
+  let arr = []
+  for (let i = 0; i < m.length; i++) {
+    let yo = Math.floor(Math.random() * m.length);
+
+    if (i > 0) {
+      if (arr.includes(yo) == true) {
+        i = i - 1
+        continue
+      }
+    }
+    arr.push(yo)
+  }
+
+
+  let bro = arr.map((v) => {
+    return m[v]
+  })
+
+
+  let k = bro.join(" ")
+  let meo = k.toString()
+
+  main.textContent = meo.toUpperCase()
+  
+
+
+
+
+
+  let but = document.querySelector(".but")
+
+  
+  
+  
+  
+  let great = ()=>{
+        
+        if(gue.value.toUpperCase() == word[a]){
+          b++
+    tobe.hidden = false
+    clearInterval(tim)
+    c = 40
+    sn.textContent = b
+    neu.hidden = false
+    neu.style.backgroundColor = "limegreen"
+    neu.textContent = "CORRECT"
+    
+    
+  }else{
+    
+    tobe.hidden = false
+    clearInterval(tim)
+    c = 40
+    
+    neu.hidden = false
+    neu.textContent = "WRONG"
+    neu.style.backgroundColor = "#DC143C"
+    
+    
+  }
+  but.removeEventListener("click",great)
+}
+  but.addEventListener("click",great)
+  
+}
+
+mn.addEventListener("click", (e) => {
+  if(username.value != ""){
+     log.hidden = true
+     am.hidden = false
+     fun()
+  }
+})
+
+tobe.addEventListener("click", (e) => {
+  gue.value = ""
+  neu.hidden = true
+  fun()
+})
+  </script>
+</body>
+</html>
